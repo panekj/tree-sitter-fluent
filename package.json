@@ -3,20 +3,47 @@
   "version": "0.12.0",
   "description": "Fluent grammar for tree-sitter",
   "main": "index.js",
+  "types": "bindings/node",
   "keywords": [
     "parser",
     "fluent"
   ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
   "author": "Max Brunsfeld <maxbrunsfeld@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.10.0"
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.12.7"
+    "tree-sitter-cli": "^0.12.7",
+    "prebuildify": "^6.0.0"
   },
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",
-    "test": "tree-sitter test"
-  }
+    "test": "tree-sitter test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.fluent",
+      "injection-regex": "^fluent$"
+    }
+  ]
 }
